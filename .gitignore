@@ -1,0 +1,35 @@
+# Ignore Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environment directories
+venv/
+env/
+env.bak/
+*.env
+*.venv
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore TensorFlow checkpoints and logs
+model/
+logs/
+
+# Ignore model artifacts and outputs
+*.h5
+*.pb
+*.tflite
+
+# Ignore system-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE-specific files
+.vscode/
+*.pydevproject
+
+# Ignore package manager files
+*.lock
