@@ -5,10 +5,14 @@ This project outlines a framework for Integrating Deep Learning Models for Spati
 ## PART 1: The Framework
 “Satellite images contain an incredible amount of data about the world, but the trick is how to translate the data into usable insights without having a human comb through every single image,” - Esther Rolf
 
-#### Goal:
+#### a) Goal:
 The HV grid is always in flux, so the ability to create an accurate snapshot at regular intervals is an important tool. The follwoing framework uses neural networks to train machine learning models to analyse satellite images and/or spatial data. 
 
-#### Required Tools and Functionalities:
+#### b) Required Tools and Functionalities:
+
+##### Google Colab:
+Google Colab (short for Google Colaboratory) provides a cloud-based Jupyter notebook environment with access to GPUs (Graphical Processing Unit) and TPUs (Tensor Processing Unit) enabling users to accelerate computations, making it ideal for training deep learning models efficiently. Colab also offers a seamless integration with Google Drive
+
 ##### Tensorflow:
 To train the deep learning models, we will need to import various libraries and modules in Python. Tensorflow and PyTorch are the two most commonly used libraries. For this project, the open-source deep learning library Tensoflow, created by the Google Brain team, has been used. 
 
@@ -17,23 +21,57 @@ One of the key features of TensorFlow is it's ability to automatically compute g
 ##### Keras:
 TensorFlow provides a high-level API called Keras as `tf.keras`, which offers an intuitive and user-friendly interface for building neural networks and other machine learning models
 
-##### Google Colab:
-Google Colab (short for Google Colaboratory) provides a cloud-based Jupyter notebook environment with access to GPUs (Graphical Processing Unit) and TPUs (Tensor Processing Unit) enabling users to accelerate computations, making it ideal for training deep learning models efficiently. Colab also offers a seamless integration with Google Drive
+#### c) Dataset:
+The first step for preparing a dataset is to find either a public dataset or a data source to collect the required data from. If the data is being collected from a source, the right data format, dimension, and label has to be maintained. The next is organizing the data into folders and subfolders and storing the customized dataset in a defined path. Each of the folders inside the main folder should represent a separate class or category. For example, if you are building a cat vs. dog classifier, you can have two folders: "cat" and "dog", with respective images inside each folder.
 
-#### Dataset:
-The first step for preparing a dataset is to find either a public dataset or a data source to collect the required data from. If the data is being collected from a source, the right data format, dimension, and label has to be maintained. The next is organizing the data into folders and subfolders and storing the customized dataset in a defined path. Each of the folders inside the main folder should represent a separate yclass or category. For example, if you are building a cat vs. dog classifier, you can have two folders: "cat" and "dog", with respective images inside each folder.
+Tensorflow supports various image types:
+JPEG (Joint Photographic Experts Group), PNG (Portable Network Graphics), GIF (Graphics Interchange Format), BMP (Bitmap), TIFF (Tagged Image File Format), WebP
 
-Tensorflow supports various image types
+A few of the commonly used datasets for aerial imagery are outlined below:
 
-#### Public Datasets:
+1. SpaceNet: SpaceNet is a series of open-source satellite imagery datasets focused on various geospatial challenges. 
+2. OpenStreetMap (OSM): OSM is a collaborative mapping project that allows users to contribute and access geospatial data. Power grid lines are sometimes mapped in OSM, and you can extract aerial imagery from various sources associated with OSM data.
+3. National Renewable Energy Laboratory (NREL) datasets: NREL provides a collection of geospatial datasets related to renewable energy, including solar and wind energy. These datasets often encompass aerial imagery that may include power grid lines in proximity to renewable energy installations.
+4. DeepGlobe : The DeepGlobe dataset focuses on several computer vision tasks related to satellite imagery, such as road extraction, building detection, and land cover classification. However, it does not provide annotations or labels specifically for power grid lines.
+5. TTPLA: This is a public dataset which is a collection of aerial images on Transmission Towers (TTs) and Powers Lines (PLs)
 
-#### Models and Hyperparameters:
+For object detection, the images need to be annoted with bounding boxes and the following steps are needed:
 
-#### Transfer Learning & Pre-trained Models
+1. Image Annotation: It involves manually or semi-automatically labeling objects of interest within an image with corresponding annotations. These annotations provide ground truth information that helps train object detection models to identify and localize objects in new, unseen images.
+2. Bounding Boxes:A bounding box is a rectangular region defined by four points: the coordinates of the top-left corner (x, y) and the bottom-right corner (x+w, y+h), where w and h are the width and height of the box, respectively. The bounding box surrounds the object of interest in the image. Each bounding box is associated with a specific class label that identifies the type of object it encloses.
+3. Labeling Objects:During the annotation process, an annotator manually draws bounding boxes around the objects in the image using specialized annotation tools or software. The annotator also assigns class labels to each bounding box, indicating the type of object it represents (e.g., car, person, dog, etc.).
 
-#### Scoring & Visualization Mechanisms:
+Data Generators
+```
+# Training data generator
+train_generator = datagen.flow_from_directory(
+    'path_to_train_folder',
+    target_size=(height, width),  # Resize images to a specified height and width
+    batch_size=batch_size,
+    class_mode='categorical',  # For multi-class classification
+    subset='training',  # Use the training subset
+)
+# Validation data generator
+validation_generator = datagen.flow_from_directory(
+    'path_to_train_folder',
+    target_size=(height, width),
+    batch_size=batch_size,
+    class_mode='categorical',
+    subset='validation',  # Use the validation subset
+)
 
-#### Auto-ML
+```
+Input Shape & Number of Classes
+   
+#### d) Models and Hyperparameters:
+
+
+
+#### e) Transfer Learning & Pre-trained Models
+
+#### f) Scoring & Visualization Mechanisms:
+
+#### g) Auto-ML
 
 * explore TIFF 
 Abstract: Use ML and/or DL models on the training set of annotated and labeled data of the missing transmission lines (above 230kV) as compared to HIFLD and test it on the other transmission lines of lower V.
@@ -52,14 +90,7 @@ Models & Hyperparameters:
 Scoring Mechanisms: 
 the widely used metric for evaluating object detection performance is mAP (mean Average Precision). mAP measures the precision and recall of object detection algorithms across different object categories and provides an overall performance score.
 
-Public Datasets: 
 
-1. SpaceNet: SpaceNet is a series of open-source satellite imagery datasets focused on various geospatial challenges. While not specifically targeting power grid lines, it includes high-resolution satellite imagery that might contain power grid infrastructure.
-2. OpenStreetMap (OSM): OSM is a collaborative mapping project that allows users to contribute and access geospatial data. Power grid lines are sometimes mapped in OSM, and you can extract aerial imagery from various sources associated with OSM data.
-3. National Renewable Energy Laboratory (NREL)? datasets: NREL provides a collection of geospatial datasets related to renewable energy, including solar and wind energy. These datasets often encompass aerial imagery that may include power grid lines in proximity to renewable energy installations.
-4. Govt. Datasets: HIFLD
-5. DeepGlobe : the DeepGlobe dataset does not specifically include power grid lines as a labeled category. The DeepGlobe dataset focuses on several computer vision tasks related to satellite imagery, such as road extraction, building detection, and land cover classification. However, it does not provide annotations or labels specifically for power grid lines.
-6. PG imagery dataset:
 
 Transfer Learning Resources:
 1. ResNet: ResNet (Residual Neural Network) is a widely used deep convolutional neural network architecture known for its depth and skip connections. It has shown excellent performance in various computer vision tasks and can serve as a strong backbone for power grid line identification.
