@@ -108,43 +108,64 @@ Hyperparameters are parameters that are set before training the model and contro
 2. Kernel Size: The size of the kernels (filters) used in the convolutional layers. Common kernel sizes are 3x3, 5x5, and 7x7.
 
 3. Pooling Size: The size of the pooling windows used in the pooling layers. Common pooling sizes are 2x2 and 3x3.
-Stride:The step size of the filter as it slides over the input image during convolution. A larger stride reduces the size of the output feature map.
-Padding:Padding adds extra border pixels to the input image to ensure that the convolution operation does not shrink the spatial dimensions too much. It can be "valid" (no padding) or "same" (pad to retain the spatial dimensions).
-Activation Function:The choice of activation function, commonly ReLU, but other functions like Sigmoid and Tanh can be used in certain scenarios.
-Number of Fully Connected Layers and Neurons:The number of fully connected layers and the number of neurons in each layer determine the depth and capacity of the fully connected part of the CNN.
-Learning Rate:The learning rate controls the step size during gradient descent optimization. It determines how much the model's weights are updated during training.
-Batch Size:The number of samples used in each training iteration. Larger batch sizes can speed up training but may require more memory.
-Number of Epochs:The number of times the model goes through the entire training dataset during training.
+
+4. Stride: The step size of the filter as it slides over the input image during convolution. A larger stride reduces the size of the output feature map.
+
+5. Padding: Padding adds extra border pixels to the input image to ensure that the convolution operation does not shrink the spatial dimensions too much. It can be "valid" (no padding) or "same" (pad to retain the spatial dimensions).
+
+6. Activation Function: The choice of activation function, commonly ReLU, but other functions like Sigmoid and Tanh can be used in certain scenarios.
+
+7. Number of Fully Connected Layers and Neurons: The number of fully connected layers and the number of neurons in each layer determine the depth and capacity of the fully connected part of the CNN.
+
+8. Learning Rate: The learning rate controls the step size during gradient descent optimization. It determines how much the model's weights are updated during training.
+
+9. Batch Size: The number of samples used in each training iteration. Larger batch sizes can speed up training but may require more memory.
+
+10. Number of Epochs: The number of times the model goes through the entire training dataset during training.
 
 These hyperparameters are crucial for building an effective CNN architecture and are often tuned through experimentation to achieve the best performance on a specific task and dataset. Different combinations of hyperparameters can significantly impact the model's training time, convergence, and generalization ability.
 
-Fine-tuning: 
+
 Overfitting:
 
 
 
 #### e) Transfer Learning & Pre-trained Models
 
+A deep learning approach called transfer learning uses a model that has been trained on one problem as the foundation for learning how to solve related problems. Pre-trained models created for benchmark datasets like ImageNet can be utilized again in computer vision applications to reduce training time and improve performance.
+
+The procedure entails incorporating one or more layers from a pre-trained model into a new model that has been trained on the particular topic of interest. This may be accomplished in a number of ways, including initializing the weights of the new model based on the pre-trained model or utilizing the pre-trained model as a feature extractor.
+
+Transfer learning is useful because it enables us to take the skills we've developed for one problem—like distinguishing between cats and dogs—and apply them to another—like distinguishing between ants and wasps—even when the target categories are different. We may make use of models' capacity to recognize generic characteristics in images and obtain state-of-the-art performance by utilizing models that have been trained on huge datasets with various categories.
+
+Many of the best-performing models, including as `VGG`, `Inception`, and `ResNet`, which were trained on the `ImageNet` dataset, are readily accessible through Keras and other deep-learning tools.
+
+<img width="768" alt="image" src="https://github.com/farastu-who/GIS-DL/assets/34352153/3aa41ac0-537b-4fe8-94ff-4402f3f9786e">
+
 #### f) Scoring & Visualization Mechanisms:
 
 #### g) Auto-ML
 
-* explore TIFF 
+ 
 Abstract: Use ML and/or DL models on the training set of annotated and labeled data of the missing transmission lines (above 230kV) as compared to HIFLD and test it on the other transmission lines of lower V.
 
 new from the HIFLD data - compare to HE TL layer - get unmatched -  find raster images for locations - analysis 
 
-Training/Validation Dataset:
+#### h) Inference Integration:
 
-Test Dataset:
+#### i Challenges:
+
+1. Overfitting
+2. Underfitting
+3. Hyperparameter Tuning
+4. Data Quality and Quantity
+5. Imbalanced Data
+6. Computational Resources
+
+
 
 Data Format:
 Tab, shp, raster, GeoJSON
-
-Models & Hyperparameters:
-
-Scoring Mechanisms: 
-the widely used metric for evaluating object detection performance is mAP (mean Average Precision). mAP measures the precision and recall of object detection algorithms across different object categories and provides an overall performance score.
 
 
 
@@ -162,7 +183,7 @@ How to utilize transfer learning? ---
 --- freeze certain layers, replace or add new layers, and retrain the model on the power grid line data to achieve better performance.
 ![image](https://github.com/farastu-who/GIS-DL/assets/34352153/456713f7-f574-4565-add5-a2e6ee03f434)
 
-## PART 2: TLC (Tranmission Line Classification) - Image Classification of Transmission Lines using Satellite Data
+## PART 2: TLC (Transmission Line Classification) - Image Classification of Transmission Lines using Satellite Data
 
 #### Required Tools and Functionalities:
 
@@ -181,9 +202,10 @@ How to utilize transfer learning? ---
 #### Further Work: 
 -make greyscale
 - more data
-- labelled data
+- labeled data
 - models
 - object detection
+- explore TIFF
 #### Resources
 1. https://medium.com/spatial-data-science/deep-learning-for-geospatial-data-applications-multi-label-classification-2b0a1838fcf3#:~:text=In%20this%20tutorial%2C%20I%20will%20show%20the%20easiest,lines%20of%20python%20code%20to%20accomplish%20this%20task.
 e
