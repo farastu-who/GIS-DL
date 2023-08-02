@@ -35,7 +35,7 @@ A few of the commonly used datasets for aerial imagery are outlined below:
 4. DeepGlobe: The DeepGlobe dataset focuses on several computer vision tasks related to satellite imagery, such as road extraction, building detection, and land cover classification. However, it does not provide annotations or labels specifically for power grid lines.
 5. TTPLA: This is a public dataset that is a collection of aerial images of Transmission Towers (TTs) and Powers Lines (PLs). An example from the dataset is shown below.
 
-![TTPLA dataset](https://github.com/farastu-who/GIS-DL/assets/34352153/1e039ce2-0194-403a-b472-e2ac3ca4ce4f)
+![TTPLA dataset](https://github.com/farastu-who/GIS-DL/assets/34352153/1fdf015b-2baf-4179-bfbf-eeac545c3504)
 
 For object detection, the images need to be annotated with bounding boxes, and the following steps are needed:
 
@@ -43,7 +43,7 @@ For object detection, the images need to be annotated with bounding boxes, and t
 2. Bounding Boxes: A bounding box is a rectangular region defined by four points: the coordinates of the top-left corner (x, y) and the bottom-right corner (x+w, y+h), where w and h are the width and height of the box, respectively. The bounding box surrounds the object of interest in the image. Each bounding box is associated with a specific class label that identifies the type of object it encloses.
 3. Labeling Objects: During the annotation process, an annotator manually draws bounding boxes around the objects in the image using specialized annotation tools or software. The annotator also assigns class labels to each bounding box, indicating the type of object it represents (e.g., car, person, dog, etc.).
 
-![elephant](https://github.com/farastu-who/GIS-DL/assets/34352153/b610810d-2f98-4009-ae03-329fde156f93)
+![elephant](https://github.com/farastu-who/GIS-DL/assets/34352153/dbcf6eff-3312-44f3-a30f-0e940b4b17f7)
 
 Data Generators
 ```
