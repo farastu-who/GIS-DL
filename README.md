@@ -6,23 +6,23 @@ This project outlines a framework for Integrating Deep Learning Models for Spati
 “Satellite images contain an incredible amount of data about the world, but the trick is how to translate the data into usable insights without having a human comb through every single image,” - Esther Rolf
 
 #### a) Goal:
-The HV grid is always in flux, so the ability to create an accurate snapshot at regular intervals is an important tool. The follwoing framework uses neural networks to train machine learning models to analyse satellite images and/or spatial data. 
+The HV grid is always in flux, so the ability to create an accurate snapshot at regular intervals is an important tool. The following framework uses neural networks to train machine learning models to analyze satellite images and/or spatial data. 
 
 #### b) Required Tools and Functionalities:
 
 ##### Google Colab:
-Google Colab (short for Google Colaboratory) provides a cloud-based Jupyter notebook environment with access to GPUs (Graphical Processing Unit) and TPUs (Tensor Processing Unit) enabling users to accelerate computations, making it ideal for training deep learning models efficiently. Colab also offers a seamless integration with Google Drive
+Google Colab (short for Google Colaboratory) provides a cloud-based Jupyter notebook environment with access to GPUs (Graphical Processing Units) and TPUs (Tensor Processing Units), enabling users to accelerate computations, making it ideal for training deep learning models efficiently. Colab also offers seamless integration with Google Drive.
 
 ##### Tensorflow:
-To train the deep learning models, we will need to import various libraries and modules in Python. Tensorflow and PyTorch are the two most commonly used libraries. For this project, the open-source deep learning library Tensoflow, created by the Google Brain team, has been used. 
+To train the deep learning models, we will need to import various libraries and modules in Python. Tensorflow and PyTorch are the two most commonly used libraries. For this project, the open-source deep learning library TensorFlow, created by the Google Brain team, has been used. 
 
-One of the key features of TensorFlow is it's ability to automatically compute gradients, making it suitable for implementing gradient-based optimization algorithms for training neural networks through backpropagation. This feature simplifies the process of building and training complex models. It also has a wide range of pre-built models and tools, making it suitable for various domains, like computer vision, natural language processing, etc. 
+One of the key features of TensorFlow is its ability to automatically compute gradients, making it suitable for implementing gradient-based optimization algorithms for training neural networks through backpropagation. This feature simplifies the process of building and training complex models. It also has a wide range of pre-built models and tools, making it suitable for various domains, like computer vision, natural language processing, etc. 
 
 ##### Keras:
-TensorFlow provides a high-level API called Keras as `tf.keras`, which offers an intuitive and user-friendly interface for building neural networks and other machine learning models
+TensorFlow provides a high-level API called Keras as `tf.keras`, which offers an intuitive and user-friendly interface for building neural networks and other machine learning models.
 
 #### c) Dataset:
-The first step for preparing a dataset is to find either a public dataset or a data source to collect the required data from. If the data is being collected from a source, the right data format, dimension, and label has to be maintained. The next is organizing the data into folders and subfolders and storing the customized dataset in a defined path. Each of the folders inside the main folder should represent a separate class or category. For example, if you are building a cat vs. dog classifier, you can have two folders: "cat" and "dog", with respective images inside each folder.
+The first step for preparing a dataset is to find either a public dataset or a data source to collect the required data. If the data is being collected from a source, the right data format, dimension, and labels have to be maintained. The next is organizing the data into folders and subfolders and storing the customized dataset in a defined path. Each of the folders inside the main folder should represent a separate class or category. For example, if you are building a cat vs. dog classifier, you can have two folders: "cat" and "dog", with respective images inside each folder.
 
 Tensorflow supports various image types:
 JPEG (Joint Photographic Experts Group), PNG (Portable Network Graphics), GIF (Graphics Interchange Format), BMP (Bitmap), TIFF (Tagged Image File Format), WebP
@@ -32,16 +32,16 @@ A few of the commonly used datasets for aerial imagery are outlined below:
 1. SpaceNet: SpaceNet is a series of open-source satellite imagery datasets focused on various geospatial challenges. 
 2. OpenStreetMap (OSM): OSM is a collaborative mapping project that allows users to contribute and access geospatial data. Power grid lines are sometimes mapped in OSM, and you can extract aerial imagery from various sources associated with OSM data.
 3. National Renewable Energy Laboratory (NREL) datasets: NREL provides a collection of geospatial datasets related to renewable energy, including solar and wind energy. These datasets often encompass aerial imagery that may include power grid lines in proximity to renewable energy installations.
-4. DeepGlobe : The DeepGlobe dataset focuses on several computer vision tasks related to satellite imagery, such as road extraction, building detection, and land cover classification. However, it does not provide annotations or labels specifically for power grid lines.
-5. TTPLA: This is a public dataset which is a collection of aerial images on Transmission Towers (TTs) and Powers Lines (PLs). An example from the dataset is shown below.
+4. DeepGlobe: The DeepGlobe dataset focuses on several computer vision tasks related to satellite imagery, such as road extraction, building detection, and land cover classification. However, it does not provide annotations or labels specifically for power grid lines.
+5. TTPLA: This is a public dataset that is a collection of aerial images of Transmission Towers (TTs) and Powers Lines (PLs). An example from the dataset is shown below.
 
 ![TTPLA dataset](https://github.com/farastu-who/GIS-DL/assets/34352153/1e039ce2-0194-403a-b472-e2ac3ca4ce4f)
 
-For object detection, the images need to be annoted with bounding boxes and the following steps are needed:
+For object detection, the images need to be annotated with bounding boxes, and the following steps are needed:
 
 1. Image Annotation: It involves manually or semi-automatically labeling objects of interest within an image with corresponding annotations. These annotations provide ground truth information that helps train object detection models to identify and localize objects in new, unseen images.
-2. Bounding Boxes:A bounding box is a rectangular region defined by four points: the coordinates of the top-left corner (x, y) and the bottom-right corner (x+w, y+h), where w and h are the width and height of the box, respectively. The bounding box surrounds the object of interest in the image. Each bounding box is associated with a specific class label that identifies the type of object it encloses.
-3. Labeling Objects:During the annotation process, an annotator manually draws bounding boxes around the objects in the image using specialized annotation tools or software. The annotator also assigns class labels to each bounding box, indicating the type of object it represents (e.g., car, person, dog, etc.).
+2. Bounding Boxes: A bounding box is a rectangular region defined by four points: the coordinates of the top-left corner (x, y) and the bottom-right corner (x+w, y+h), where w and h are the width and height of the box, respectively. The bounding box surrounds the object of interest in the image. Each bounding box is associated with a specific class label that identifies the type of object it encloses.
+3. Labeling Objects: During the annotation process, an annotator manually draws bounding boxes around the objects in the image using specialized annotation tools or software. The annotator also assigns class labels to each bounding box, indicating the type of object it represents (e.g., car, person, dog, etc.).
 
 ![elephant](https://github.com/farastu-who/GIS-DL/assets/34352153/b610810d-2f98-4009-ae03-329fde156f93)
 
@@ -71,31 +71,43 @@ Input Shape & Number of Classes
 
 A Convolutional Neural Network (CNN) is a type of deep learning model commonly used for image recognition, computer vision tasks, and other pattern recognition problems. CNNs are designed to automatically and adaptively learn spatial hierarchies of features from input images, making them particularly effective in capturing local patterns and structures.
 
-An explanation of a basic CNN architecture model along with the commonly used hyperparameters have been delineated below:
+An explanation of a basic CNN architecture model, along with the commonly used hyperparameters, have been delineated below:
 
 ##### CNN Architecture Model:
 
-1. Input Layer:The input layer receives the raw pixel values of an image as its input. Images are usually represented as 3D tensors with dimensions (height, width, channels), where channels represent color channels (e.g., RGB images have 3 channels). 
+1. Input Layer: The input layer receives the raw pixel values of an image as its input. Images are usually represented as 3D tensors with dimensions (height, width, channels), where channels represent color channels. For example, if the images are grayscale with a size of 28x28 pixels, the input_shape would be (28, 28, 1). If the images are RGB with a size of 32x32 pixels, the input_shape would be (32, 32, 3). 
    
-2. Convolutional Layers:The core building blocks of a CNN are the convolutional layers. Each convolutional layer consists of multiple filters (kernels) that slide over the input image to perform a convolution operation. The filters learn to extract local patterns and features from the input image.
-The output of each convolutional layer is called a feature map, representing the activations of different filters.
+2. Convolutional Layers: The core building blocks of a CNN are the convolutional layers. Each convolutional layer consists of multiple filters (kernels) that slide over the input image to perform a convolution operation. The filters learn to extract local patterns and features from the input image. The output of each convolutional layer is called a feature map, representing the activations of different filters.
+`Conv2D(32, (3, 3), activation='relu', input_shape=input_shape)`
+In the above example of a convolutional layer, the Conv2D layer has 32 filters of size 3x3
 
-3. Activation Functions (ReLU):After each convolution operation, an activation function is applied element-wise to introduce non-linearity to the model. The Rectified Linear Unit (ReLU) is commonly used as the activation function in CNNs, setting negative values to zero and keeping positive values unchanged.
+3. Activation Functions (ReLU): After each convolution operation, an activation function is applied element-wise to introduce non-linearity to the model. The Rectified Linear Unit (ReLU) is commonly used as the activation function in CNNs, setting negative values to zero and keeping positive values unchanged.
 
 4. Pooling Layers: Pooling layers downsample the feature maps obtained from the convolutional layers by reducing their spatial dimensions. MaxPooling and AveragePooling are popular pooling methods, which take the maximum or average value in a local region, respectively.
 Pooling reduces computational complexity, helps in controlling overfitting, and makes the model more robust to small variations in the input.
 
-5. Flatten Layer:After the last pooling layer, a flatten layer is used to convert the 3D feature maps into a 1D vector. This step is necessary to connect the output of the convolutional and pooling layers to the fully connected layers (dense layers).
-Fully Connected Layers:The fully connected layers are traditional neural network layers where every neuron is connected to every neuron in the previous and subsequent layers. These layers process the extracted features and produce the final output for the given task.
-Output Layer:The output layer of the CNN produces the final prediction or classification. For image classification tasks, it typically contains neurons corresponding to the number of classes in the dataset, and the output is passed through an activation function (e.g., softmax for multi-class classification) to obtain class probabilities.
+5. Flatten Layer: After the last pooling layer, a flatten layer is used to convert the 3D feature maps into a 1D vector. This step is necessary to connect the output of the convolutional and pooling layers to the fully connected layers (dense layers).
 
-Hyperparameters:
+6. Fully Connected Layers: The fully connected layers are traditional neural network layers where every neuron is connected to every neuron in the previous and subsequent layers. These layers process the extracted features and produce the final output for the given task. In Keras, the Dense layer represents a fully connected layer in a neural network.
+
+7. Output Layer: The output layer of the CNN produces the final prediction or classification. For image classification tasks, it typically contains neurons corresponding to the number of classes in the dataset and the output is passed through an activation function (e.g., softmax for multi-class classification) to obtain class probabilities.
+
+The following is an example of a fully connected layer and the output layer:
+```
+Dense(128, activation='relu'),
+Dense(num_classes, activation='softmax')
+```
+The Dense layer constructor accepts two main parameters; units and activation_function. Units are the number of neurons in the layer. In the first Dense layer, there are 128 neurons, and in the second Dense layer, the number of neurons is equal to the number of classes (num_classes) in the dataset.
+
+##### Hyperparameters:
 
 Hyperparameters are parameters that are set before training the model and control various aspects of the learning process. Some common hyperparameters in a CNN include:
 
-Number of Convolutional Layers and Filters:The number of convolutional layers and the number of filters in each layer determine the depth and complexity of the CNN architecture. Deeper networks can learn more complex features but may require more computational resources.
-Kernel Size:The size of the kernels (filters) used in the convolutional layers. Common kernel sizes are 3x3, 5x5, and 7x7.
-Pooling Size:The size of the pooling windows used in the pooling layers. Common pooling sizes are 2x2 and 3x3.
+1. Number of Convolutional Layers and Filters: The number of convolutional layers and the number of filters in each layer determine the depth and complexity of the CNN architecture. Deeper networks can learn more complex features but may require more computational resources.
+
+2. Kernel Size: The size of the kernels (filters) used in the convolutional layers. Common kernel sizes are 3x3, 5x5, and 7x7.
+
+3. Pooling Size: The size of the pooling windows used in the pooling layers. Common pooling sizes are 2x2 and 3x3.
 Stride:The step size of the filter as it slides over the input image during convolution. A larger stride reduces the size of the output feature map.
 Padding:Padding adds extra border pixels to the input image to ensure that the convolution operation does not shrink the spatial dimensions too much. It can be "valid" (no padding) or "same" (pad to retain the spatial dimensions).
 Activation Function:The choice of activation function, commonly ReLU, but other functions like Sigmoid and Tanh can be used in certain scenarios.
@@ -106,6 +118,7 @@ Number of Epochs:The number of times the model goes through the entire training 
 
 These hyperparameters are crucial for building an effective CNN architecture and are often tuned through experimentation to achieve the best performance on a specific task and dataset. Different combinations of hyperparameters can significantly impact the model's training time, convergence, and generalization ability.
 
+Fine-tuning: 
 Overfitting:
 
 
