@@ -65,7 +65,39 @@ Input Shape & Number of Classes
    
 #### d) Models and Hyperparameters:
 
+A Convolutional Neural Network (CNN) is a type of deep learning model commonly used for image recognition, computer vision tasks, and other pattern recognition problems. CNNs are designed to automatically and adaptively learn spatial hierarchies of features from input images, making them particularly effective in capturing local patterns and structures.
 
+An explanation of a basic CNN architecture model along with the commonly used hyperparameters have been delineated below:
+
+##### CNN Architecture Model:
+
+1. Input Layer:The input layer receives the raw pixel values of an image as its input. Images are usually represented as 3D tensors with dimensions (height, width, channels), where channels represent color channels (e.g., RGB images have 3 channels).
+   
+2. Convolutional Layers:The core building blocks of a CNN are the convolutional layers. Each convolutional layer consists of multiple filters (kernels) that slide over the input image to perform a convolution operation. The filters learn to extract local patterns and features from the input image.
+The output of each convolutional layer is called a feature map, representing the activations of different filters.
+Activation Functions (ReLU):After each convolution operation, an activation function is applied element-wise to introduce non-linearity to the model. The Rectified Linear Unit (ReLU) is commonly used as the activation function in CNNs, setting negative values to zero and keeping positive values unchanged.
+Pooling Layers:Pooling layers downsample the feature maps obtained from the convolutional layers by reducing their spatial dimensions. MaxPooling and AveragePooling are popular pooling methods, which take the maximum or average value in a local region, respectively.
+Pooling reduces computational complexity, helps in controlling overfitting, and makes the model more robust to small variations in the input.
+Flatten Layer:After the last pooling layer, a flatten layer is used to convert the 3D feature maps into a 1D vector. This step is necessary to connect the output of the convolutional and pooling layers to the fully connected layers (dense layers).
+Fully Connected Layers:The fully connected layers are traditional neural network layers where every neuron is connected to every neuron in the previous and subsequent layers. These layers process the extracted features and produce the final output for the given task.
+Output Layer:The output layer of the CNN produces the final prediction or classification. For image classification tasks, it typically contains neurons corresponding to the number of classes in the dataset, and the output is passed through an activation function (e.g., softmax for multi-class classification) to obtain class probabilities.
+
+Hyperparameters:
+
+Hyperparameters are parameters that are set before training the model and control various aspects of the learning process. Some common hyperparameters in a CNN include:
+
+Number of Convolutional Layers and Filters:The number of convolutional layers and the number of filters in each layer determine the depth and complexity of the CNN architecture. Deeper networks can learn more complex features but may require more computational resources.
+Kernel Size:The size of the kernels (filters) used in the convolutional layers. Common kernel sizes are 3x3, 5x5, and 7x7.
+Pooling Size:The size of the pooling windows used in the pooling layers. Common pooling sizes are 2x2 and 3x3.
+Stride:The step size of the filter as it slides over the input image during convolution. A larger stride reduces the size of the output feature map.
+Padding:Padding adds extra border pixels to the input image to ensure that the convolution operation does not shrink the spatial dimensions too much. It can be "valid" (no padding) or "same" (pad to retain the spatial dimensions).
+Activation Function:The choice of activation function, commonly ReLU, but other functions like Sigmoid and Tanh can be used in certain scenarios.
+Number of Fully Connected Layers and Neurons:The number of fully connected layers and the number of neurons in each layer determine the depth and capacity of the fully connected part of the CNN.
+Learning Rate:The learning rate controls the step size during gradient descent optimization. It determines how much the model's weights are updated during training.
+Batch Size:The number of samples used in each training iteration. Larger batch sizes can speed up training but may require more memory.
+Number of Epochs:The number of times the model goes through the entire training dataset during training.
+
+These hyperparameters are crucial for building an effective CNN architecture and are often tuned through experimentation to achieve the best performance on a specific task and dataset. Different combinations of hyperparameters can significantly impact the model's training time, convergence, and generalization ability.
 
 #### e) Transfer Learning & Pre-trained Models
 
