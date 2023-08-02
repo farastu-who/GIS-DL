@@ -33,7 +33,7 @@ A few of the commonly used datasets for aerial imagery are outlined below:
 2. OpenStreetMap (OSM): OSM is a collaborative mapping project that allows users to contribute and access geospatial data. Power grid lines are sometimes mapped in OSM, and you can extract aerial imagery from various sources associated with OSM data.
 3. National Renewable Energy Laboratory (NREL) datasets: NREL provides a collection of geospatial datasets related to renewable energy, including solar and wind energy. These datasets often encompass aerial imagery that may include power grid lines in proximity to renewable energy installations.
 4. DeepGlobe: The DeepGlobe dataset focuses on several computer vision tasks related to satellite imagery, such as road extraction, building detection, and land cover classification. However, it does not provide annotations or labels specifically for power grid lines.
-5. TTPLA: This is a public dataset that is a collection of aerial images of Transmission Towers (TTs) and Powers Lines (PLs). An example from the dataset is shown below.
+5. TTPLA: This is a public dataset that is a collection of aerial images of Transmission Towers (TTs) and Powers Lines (PLs). It consists of 1,100 images with a resolution of 3,840×2,160 pixels, as well as manually labeled 8,987 instances of TTs and PLs. An example from the dataset is shown below.
 
 ![TTPLA dataset](https://github.com/farastu-who/GIS-DL/assets/34352153/1fdf015b-2baf-4179-bfbf-eeac545c3504)
 
@@ -66,6 +66,9 @@ validation_generator = datagen.flow_from_directory(
 
 ```
 Input Shape & Number of Classes
+
+Train/Validation/Test Split:
+Once the dataset has been pre-processed, we are ready for the final step in setting up the data by creating the Split dataset into 3 sets: “train”, “validation”, and “test” splits (e.g., 60%/20%/20% train/val/test split)
    
 #### d) Models and Hyperparameters:
 
@@ -74,6 +77,9 @@ A Convolutional Neural Network (CNN) is a type of deep learning model commonly u
 An explanation of a basic CNN architecture model, along with the commonly used hyperparameters, have been delineated below:
 
 ##### CNN Architecture Model:
+
+<img width="656" alt="image" src="https://github.com/farastu-who/GIS-DL/assets/34352153/c7dd6e5e-e4e9-4f19-8f17-7bd4777d6236">
+
 
 1. Input Layer: The input layer receives the raw pixel values of an image as its input. Images are usually represented as 3D tensors with dimensions (height, width, channels), where channels represent color channels. For example, if the images are grayscale with a size of 28x28 pixels, the input_shape would be (28, 28, 1). If the images are RGB with a size of 32x32 pixels, the input_shape would be (32, 32, 3). 
    
@@ -97,11 +103,11 @@ The following is an example of a fully connected layer and the output layer:
 Dense(128, activation='relu'),
 Dense(num_classes, activation='softmax')
 ```
-The Dense layer constructor accepts two main parameters; units and activation_function. Units are the number of neurons in the layer. In the first Dense layer, there are 128 neurons, and in the second Dense layer, the number of neurons is equal to the number of classes (num_classes) in the dataset.
+The Dense layer constructor accepts two main hyper-parameters; units and activation_function. Units are the number of neurons in the layer. In the first Dense layer, there are 128 neurons, and in the second Dense layer, the number of neurons is equal to the number of classes (num_classes) in the dataset.
 
 ##### Hyperparameters:
 
-Hyperparameters are parameters that are set before training the model and control various aspects of the learning process. Some common hyperparameters in a CNN include:
+The model learns parameters like the weights and biases, and hyperparameters are parameters that are set before training the model and control various aspects of the learning process. Some common hyperparameters in a CNN include:
 
 1. Number of Convolutional Layers and Filters: The number of convolutional layers and the number of filters in each layer determine the depth and complexity of the CNN architecture. Deeper networks can learn more complex features but may require more computational resources.
 
@@ -125,11 +131,6 @@ Hyperparameters are parameters that are set before training the model and contro
 
 These hyperparameters are crucial for building an effective CNN architecture and are often tuned through experimentation to achieve the best performance on a specific task and dataset. Different combinations of hyperparameters can significantly impact the model's training time, convergence, and generalization ability.
 
-
-Overfitting:
-
-
-
 #### e) Transfer Learning & Pre-trained Models
 
 A deep learning approach called transfer learning uses a model that has been trained on one problem as the foundation for learning how to solve related problems. Pre-trained models created for benchmark datasets like ImageNet can be utilized again in computer vision applications to reduce training time and improve performance.
@@ -141,6 +142,21 @@ Transfer learning is useful because it enables us to take the skills we've devel
 Many of the best-performing models, including as `VGG`, `Inception`, and `ResNet`, which were trained on the `ImageNet` dataset, are readily accessible through Keras and other deep-learning tools.
 
 <img width="768" alt="image" src="https://github.com/farastu-who/GIS-DL/assets/34352153/3aa41ac0-537b-4fe8-94ff-4402f3f9786e">
+
+Steps for transfer learning:
+
+1. Obtain Pre-trained Models: The first step is to choose and acquire pre-trained models that were developed using a large-scale image dataset, such ImageNet. These models have learned general features from diverse images and can be a good starting point for a specific problem.
+
+2. Data Preparation: At this stage, we need to collect and label images. Ensure that the images are preprocessed and standardized to fit the input requirements of the pre-trained models. This may involve resizing the images, normalizing pixel values, and augmenting the data to increase its diversity and size.
+
+3. Selecting layers to transfer:  Now, we can choose the pre-trained model's layers that we wish to employ for transfer learning. In most cases, the earlier layers pick up on more general features like edges and textures, whereas the later layers pick up on more detailed aspects. Depending on the size of your dataset and the complexity of your challenge, you may decide whether to employ all or part of these layers.
+
+4. Transfer Learning Strategy: The two main strategies are:
+   * Feature Extraction: Use the pre-trained model as a fixed feature extractor by freezing its weights. A new classifier appropriate for the specific task should be added in place of the pre-trained model's initial classification head. Keep the previously trained layers frozen and only train the newly inserted layers.
+   * 
+
+<img width="1105" alt="image" src="https://github.com/farastu-who/GIS-DL/assets/34352153/54e9b6bd-4d12-4a4f-9b40-3dc140ae8589">
+
 
 #### f) Scoring & Visualization Mechanisms:
 
@@ -169,12 +185,6 @@ Tab, shp, raster, GeoJSON
 
 
 
-Transfer Learning Resources:
-1. ResNet: ResNet (Residual Neural Network) is a widely used deep convolutional neural network architecture known for its depth and skip connections. It has shown excellent performance in various computer vision tasks and can serve as a strong backbone for power grid line identification.
-2. EfficientNet: EfficientNet is a family of efficient convolutional neural network architectures that achieve state-of-the-art performance while maintaining computational efficiency. It provides a good trade-off between accuracy and computational resources, making it suitable for power grid line identification.
-3. VGGNet: VGGNet is a classic deep CNN architecture known for its simplicity and uniformity. While it may be less computationally efficient compared to newer models, it can still be effective for transfer learning and power grid line identification tasks.
-4. Mask R-CNN: Mask R-CNN is a popular instance segmentation framework that combines object detection and pixel-wise segmentation. It can be applied to identify power grid lines by segmenting the lines from the background, providing more detailed information about their locations.
-5. YOLO (You Only Look Once): YOLO is an object detection framework that focuses on real-time performance. It can be used to detect power grid lines as bounding boxes with class labels, making it suitable for applications where real-time processing is crucial.
 
 ## check out road - mapping?
 
