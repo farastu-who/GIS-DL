@@ -33,13 +33,17 @@ A few of the commonly used datasets for aerial imagery are outlined below:
 2. OpenStreetMap (OSM): OSM is a collaborative mapping project that allows users to contribute and access geospatial data. Power grid lines are sometimes mapped in OSM, and you can extract aerial imagery from various sources associated with OSM data.
 3. National Renewable Energy Laboratory (NREL) datasets: NREL provides a collection of geospatial datasets related to renewable energy, including solar and wind energy. These datasets often encompass aerial imagery that may include power grid lines in proximity to renewable energy installations.
 4. DeepGlobe : The DeepGlobe dataset focuses on several computer vision tasks related to satellite imagery, such as road extraction, building detection, and land cover classification. However, it does not provide annotations or labels specifically for power grid lines.
-5. TTPLA: This is a public dataset which is a collection of aerial images on Transmission Towers (TTs) and Powers Lines (PLs)
+5. TTPLA: This is a public dataset which is a collection of aerial images on Transmission Towers (TTs) and Powers Lines (PLs). An example from the dataset is shown below.
+
+![TTPLA dataset](https://github.com/farastu-who/GIS-DL/assets/34352153/1e039ce2-0194-403a-b472-e2ac3ca4ce4f)
 
 For object detection, the images need to be annoted with bounding boxes and the following steps are needed:
 
 1. Image Annotation: It involves manually or semi-automatically labeling objects of interest within an image with corresponding annotations. These annotations provide ground truth information that helps train object detection models to identify and localize objects in new, unseen images.
 2. Bounding Boxes:A bounding box is a rectangular region defined by four points: the coordinates of the top-left corner (x, y) and the bottom-right corner (x+w, y+h), where w and h are the width and height of the box, respectively. The bounding box surrounds the object of interest in the image. Each bounding box is associated with a specific class label that identifies the type of object it encloses.
 3. Labeling Objects:During the annotation process, an annotator manually draws bounding boxes around the objects in the image using specialized annotation tools or software. The annotator also assigns class labels to each bounding box, indicating the type of object it represents (e.g., car, person, dog, etc.).
+
+![elephant](https://github.com/farastu-who/GIS-DL/assets/34352153/b610810d-2f98-4009-ae03-329fde156f93)
 
 Data Generators
 ```
@@ -71,14 +75,17 @@ An explanation of a basic CNN architecture model along with the commonly used hy
 
 ##### CNN Architecture Model:
 
-1. Input Layer:The input layer receives the raw pixel values of an image as its input. Images are usually represented as 3D tensors with dimensions (height, width, channels), where channels represent color channels (e.g., RGB images have 3 channels).
+1. Input Layer:The input layer receives the raw pixel values of an image as its input. Images are usually represented as 3D tensors with dimensions (height, width, channels), where channels represent color channels (e.g., RGB images have 3 channels). 
    
 2. Convolutional Layers:The core building blocks of a CNN are the convolutional layers. Each convolutional layer consists of multiple filters (kernels) that slide over the input image to perform a convolution operation. The filters learn to extract local patterns and features from the input image.
 The output of each convolutional layer is called a feature map, representing the activations of different filters.
-Activation Functions (ReLU):After each convolution operation, an activation function is applied element-wise to introduce non-linearity to the model. The Rectified Linear Unit (ReLU) is commonly used as the activation function in CNNs, setting negative values to zero and keeping positive values unchanged.
-Pooling Layers:Pooling layers downsample the feature maps obtained from the convolutional layers by reducing their spatial dimensions. MaxPooling and AveragePooling are popular pooling methods, which take the maximum or average value in a local region, respectively.
+
+3. Activation Functions (ReLU):After each convolution operation, an activation function is applied element-wise to introduce non-linearity to the model. The Rectified Linear Unit (ReLU) is commonly used as the activation function in CNNs, setting negative values to zero and keeping positive values unchanged.
+
+4. Pooling Layers: Pooling layers downsample the feature maps obtained from the convolutional layers by reducing their spatial dimensions. MaxPooling and AveragePooling are popular pooling methods, which take the maximum or average value in a local region, respectively.
 Pooling reduces computational complexity, helps in controlling overfitting, and makes the model more robust to small variations in the input.
-Flatten Layer:After the last pooling layer, a flatten layer is used to convert the 3D feature maps into a 1D vector. This step is necessary to connect the output of the convolutional and pooling layers to the fully connected layers (dense layers).
+
+5. Flatten Layer:After the last pooling layer, a flatten layer is used to convert the 3D feature maps into a 1D vector. This step is necessary to connect the output of the convolutional and pooling layers to the fully connected layers (dense layers).
 Fully Connected Layers:The fully connected layers are traditional neural network layers where every neuron is connected to every neuron in the previous and subsequent layers. These layers process the extracted features and produce the final output for the given task.
 Output Layer:The output layer of the CNN produces the final prediction or classification. For image classification tasks, it typically contains neurons corresponding to the number of classes in the dataset, and the output is passed through an activation function (e.g., softmax for multi-class classification) to obtain class probabilities.
 
@@ -98,6 +105,10 @@ Batch Size:The number of samples used in each training iteration. Larger batch s
 Number of Epochs:The number of times the model goes through the entire training dataset during training.
 
 These hyperparameters are crucial for building an effective CNN architecture and are often tuned through experimentation to achieve the best performance on a specific task and dataset. Different combinations of hyperparameters can significantly impact the model's training time, convergence, and generalization ability.
+
+Overfitting:
+
+
 
 #### e) Transfer Learning & Pre-trained Models
 
