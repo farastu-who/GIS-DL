@@ -365,6 +365,95 @@ Another key aspect when it comes to deploying these large AI models is Machine L
 ### Dataset:
 
 
+```
+//Add the Unmatched Lines imported from a SHP
+var unmatchedadditions = ee.FeatureCollection('projects/he-dev-emi-shlmp-01/assets/unmatchedadditions')
+
+ 
+
+// Generate the desired image from the given bbox.
+var region = ee.Geometry.Rectangle(-98.95161744,44.07356697,-94.10356077,46.24513627)
+
+ 
+
+//Select out the desired unmatched line (multiple different filter options)                   
+// var selectedlines = unmatchedadditions.filter("id == 178146").geometry()
+var selectedlines = unmatchedadditions.filterBounds(region).geometry()
+
+ 
+
+//Buffer the selected Unmatched Line by 100 meters
+var buffer = selectedlines.buffer(100);
+
+ 
+
+//Use National Agriculture Imagery Program (NAIP) for Satellite Images 
+//It has the most recent and highest resolution data thats freely available.
+var naip_imagery = ee.ImageCollection('USDA/NAIP/DOQQ')
+    .filterBounds(region)
+    .filterDate('2020','2023')
+    .select('R', 'G', 'B') //Select the image bands(NAIP should have 4 bands but only want red,green,blue for true color)
+
+ 
+
+//Composite all the images into a collection so it can be clipped by the buffer
+var clipped_image = naip_imagery.mosaic() 
+        .clip(buffer) //Clip the image to the buffer of the selected line
+
+ 
+
+//UI Map Stuff (not needed)
+Map.addLayer(region, null ,'Region', false);
+Map.addLayer(naip_imagery, null, 'NAIP Imagery', false);
+Map.addLayer(buffer, null ,'Buffer', false);
+Map.addLayer(clipped_image, null, 'Clipped Image', true);
+Map.addLayer(selectedlines, null ,'Selected Lines', true);
+
+ 
+
+//Zoom to the clipped images in the map
+Map.centerObject(clipped_image, 10)
+
+ 
+
+ 
+
+// //Export Map Tiles to Cloud Storage as pngs;
+// Export.map.toCloudStorage({
+//     image:clipped_image,
+//     description:"clipped_test_region",
+//     bucket:"he-dev-emi-shlmp-01-images",
+//     scale:0.6,
+//     region:region,
+//     skipEmptyTiles:true,
+//     maxZoom: 18,
+//     minZoom: 18,
+//     fileFormat: 'png'
+// })
+
+ 
+
+// //Export Image to Cloud Storage as GeoTIFF
+// Export.image.toCloudStorage({
+//     image:clipped_image,
+//     description:"clipped_test_region",
+//     fileNamePrefix: 'clipped_test_region',
+//     bucket:"he-dev-emi-shlmp-01-images",
+//     scale:1,
+//     maxPixels:1e12,
+//     fileFormat:'GeoTiff',
+//     region:region,
+//     skipEmptyTiles:true,
+//     maxZoom: 18,
+//     minZoom: 18,
+//     formatOptions: {
+//       cloudOptimized: true
+//     }
+// })
+
+```
+
+
 #### Further Work: 
 -make greyscale
 - more data
