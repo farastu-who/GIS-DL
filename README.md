@@ -358,18 +358,12 @@ Another key aspect when it comes to deploying these large AI models is Machine L
 
 ## PART 2: TLC (Transmission Line Classification) - Image Classification of Transmission Lines using Satellite Data
 
-### Required Tools and Functionalities:
+### Project Description:
+
+
 
 ### Dataset:
 
-
-### Models and Hyperparameters:
-
-### Transfer Learning & Pre-trained Models
-
-### Scoring & Visualization Mechanisms:
-
-### Auto-ML
 
 #### Further Work: 
 -make greyscale
