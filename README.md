@@ -35,12 +35,18 @@ This project outlines a framework for Integrating Deep Learning Models for Spati
 ## PART 1: The Framework
 “Satellite images contain an incredible amount of data about the world, but the trick is how to translate the data into usable insights without having a human comb through every single image,” - Esther Rolf
 
+![image](https://github.com/farastu-who/GIS-DL/assets/34352153/d8567584-cc04-4485-a869-ecefa966b863)
+
+
 <!-- Goal -->
 ### a) Goal:
 The HV grid is always in flux, so the ability to create an accurate snapshot at regular intervals is an important tool. The following framework uses neural networks to train machine learning models to analyze satellite images and/or spatial data. 
 
 <!-- Required Tools and Functionalities -->
 ### b) Required Tools and Functionalities:
+
+#### Python:
+Python is the preferred language for any machine learning and data processing tasks due to it's vast ecosystem, community support, simplicity, flexibility, a plethora of machine learning frameowrks and pre-trained models, and its ease of integration with other data science tools.
 
 #### Google Colab:
 Google Colab (short for Google Colaboratory) provides a cloud-based Jupyter notebook environment with access to GPUs (Graphical Processing Units) and TPUs (Tensor Processing Units), enabling users to accelerate computations, making it ideal for training deep learning models efficiently. Colab also offers seamless integration with Google Drive.
@@ -52,6 +58,9 @@ One of the key features of TensorFlow is its ability to automatically compute gr
 
 #### Keras:
 TensorFlow provides a high-level API called Keras as `tf.keras`, which offers an intuitive and user-friendly interface for building neural networks and other machine learning models.
+
+<img width="737" alt="image" src="https://github.com/farastu-who/GIS-DL/assets/34352153/1367fa15-fca6-4805-af71-44905334ca7d">
+
 
 ### c) Dataset:
 The first step for preparing a dataset is to find either a public dataset or a data source to collect the required data. If the data is being collected from a source, the right data format, dimension, and labels have to be maintained. The next is organizing the data into folders and subfolders and storing the customized dataset in a defined path. Each of the folders inside the main folder should represent a separate class or category. For example, if you are building a cat vs. dog classifier, you can have two folders: "cat" and "dog", with respective images inside each folder.
@@ -341,6 +350,7 @@ Deep learning models, especially large architectures, require significant comput
 - models
 - object detection
 - explore TIFF
+- explore several other types of region
 
 
 #### Resources
@@ -353,4 +363,7 @@ power line image dataset that are publicly available:
 1. TTPLA -
 2. Emre, Y.Ö., Nezih, G.Ö., et al.: Power line image dataset (infrared-IR and visible
 light-VL). Mendeley Data (2017)
-3. 
+3. https://iopscience.iop.org/article/10.1088/1742-6596/1757/1/012056/pdf
+4. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9460718/
+5. https://ieeexplore.ieee.org/abstract/document/8550771
+6. 
