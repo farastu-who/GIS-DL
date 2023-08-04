@@ -263,15 +263,7 @@ However, if the training accuracy continues to increase while the validation acc
 ![image](https://github.com/farastu-who/GIS-DL/assets/34352153/a0b2c391-8e78-457a-b8bb-12588559f18b)
 
 
-
-### g) Auto-ML
-
- 
-Abstract: Use ML and/or DL models on the training set of annotated and labeled data of the missing transmission lines (above 230kV) as compared to HIFLD and test it on the other transmission lines of lower V.
-
-new from the HIFLD data - compare to HE TL layer - get unmatched -  find raster images for locations - analysis 
-
-### h) Inference Integration:
+### g) Inference Integration:
 The process of integrating a deep learning or machine learning model that has been trained to make predictions into a system or application is known as inference integration. In order to produce usable outputs from input data, it entails deploying the trained model for usage in the real world.
 
 The following steps are included in the inference integration process:
@@ -286,7 +278,7 @@ The following steps are included in the inference integration process:
 
 5. Integration with Application: The results of the model's inference are integrated into the larger application or system where the predictions are needed. This could be part of a web application, a mobile app, an automation system, or any other application that can benefit from the model's predictions.
 
-### i) Challenges:
+### h) Challenges:
 
 1. Overfitting: 
 Overfitting is a common issue in machine learning where a model learns the training data too well and becomes overly specialized to the specific examples in the training set. As a result, the overfitted model performs very well on the training data but fails to generalize to new, unseen data from the real-world, leading to poor performance on the test or validation data. When a model overfits, it memorizes the noise and random variations in the training data rather than learning the underlying patterns that would enable it to make accurate predictions on new data. The model becomes too complex, with too many parameters or features, allowing it to fit even the smallest details in the training data.
@@ -326,6 +318,42 @@ Deep learning models, especially large architectures, require significant comput
 7. Model Optimization: Optimize the model architecture and hyperparameters to reduce the computational burden. Use smaller model architectures if the task allows, and adjust the hyperparameters to strike a balance between performance and computational resources.
 
 8. Batch Size: Adjust the batch size during training to optimize the trade-off between computation speed and memory usage. Larger batch sizes can be more efficient on GPUs, but they require more memory.
+
+### i) Auto-ML & MLOps
+
+AutoML, short for Automated Machine Learning, aims to democratize machine learning by automating and simplifying the process of building and deploying models. Traditionally, developing machine learning models required expert data scientists with a deep understanding of algorithms, hyperparameters tuning, and feature engineering. However, AutoML enables non-experts to harness the power of machine learning and make data-driven decisions. AutoML is user-friendly and helps accelerate the machine learning development lifecycle by automatically exploring and comparing various models. But some critics argue that it can oversimplify the machine-learning process, leading to potential black-box models with little interpretability. 
+
+Another key aspect when it comes to deploying these large AI models is Machine Learning Operations (MLOps) which bridges the gap between data scientists and IT operations teams, aiming to streamline the deployment and maintenance of machine learning models in production environments. MLOps ensures that machine learning models are not only accurate and performant but also scalable, reliable, and maintainable in real-world scenarios.
+
+#### An example setup of the integration of Auto-ML and MLOps with a machine learning project that uses spatial and satellite data is given below: 
+ 
+1. Using Google Earth Engine (GEE), identify the satellite imagery or geospatial data you want to use for training your neural network models
+
+2. Load the geospatial data (e.g., satellite imagery) into QGIS, and preprocess the data as needed, including tasks such as data clipping, projection conversion, and filtering
+
+3. Export the preprocessed data from QGIS to Google Earth Engine using the Earth Engine Python API and set up Google Colab with required libraries to work on custom neural network models
+
+4. Explore Google Cloud's pre-trained models available in Vertex AI. Choose a pre-trained model that fits your geospatial data analysis needs (e.g., object detection, image classification, etc.).
+
+5. Deploy both your custom-trained model from Colab and the pre-trained model from Vertex AI as endpoints on Vertex AI.
+
+6. Test the deployed models using new data samples and get predictions, then interpret the results and evaluate the effectiveness of the different models. This step should be automated for better efficiency.
+
+7. A version control system like Git should be used to track changes to the machine learning code, data, and model files.
+
+8. Next, the CI (Continuous Integration) pipeline should build the model code, run the automated tests, and provide feedback on the code quality and model performance.
+
+9. The trained model artifacts and other dependencies should be stored in an artifact management system to ensure accessibility.
+
+10. A CD (Continuous Deployment) pipeline should be set up as well to automatically deploy the model to production when all tests pass successfully in the CI pipeline.
+
+11. Use containerization tools like Docker to package the machine learning model and its dependencies into a portable container.
+
+12. Use orchestration tools like Kubernetes to manage and scale the deployment of the containerized machine learning models in a production environment.
+
+13. Finally, implement monitoring and logging for the deployed machine learning models by tracking performance metrics, model accuracy, and other relevant data to detect anomalies and ensure the model's health in production.
+
+<img width="784" alt="image" src="https://github.com/farastu-who/GIS-DL/assets/34352153/63793202-55aa-4b4d-811f-e7765cb3ed1a">
 
 
 ## PART 2: TLC (Transmission Line Classification) - Image Classification of Transmission Lines using Satellite Data
