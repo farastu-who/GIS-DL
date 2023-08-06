@@ -311,7 +311,7 @@ Deep learning models, especially large architectures, require significant comput
 
 4. Early Stopping: Monitoring the model's performance on a validation set during training and stopping when performance starts to degrade can prevent overfitting.
 
-5. Representative Data: Ensure that you have enough data to adequately represent the problem domain. If the dataset is small, consider gathering more data or using data augmentation techniques to create additional training examples.
+5. Representative Data: Ensure that you have enough data to represent the problem domain adequately. If the dataset is small, consider gathering more data or using data augmentation techniques to create additional training examples.
 
 6. Data Preprocessing: Clean and preprocess the data to remove any inconsistencies, outliers, or missing values. Standardize or normalize the features to make them comparable and ensure numerical stability during training.
 
@@ -358,12 +358,24 @@ Another key aspect when it comes to deploying these large AI models is Machine L
 
 ## PART 2: TLC (Transmission Line Classification) - Image Classification of Transmission Lines using Satellite Data
 
-### Project Description:
+### Project Description: 
+When comparing Hitachi Energy's transmission lines data with the newly released HIFLD data, hundreds of unmatched transmission lines were found. The next step in this process would require a GIS analyst to comb through all the spatial data and add the relevant transmission lines to HE's dataset. This project attempts to automate the process of adding the transmission lines using neural networks by performing image classification.
+
+### Dataset: 
+Pre-processing the dataset is a crucial step of the process since the quality, quantity, labeling, and diversity of the images will decide how well the deep learning model learns the image features. 
+
+A sample dataset containing 50 satellite images of transmission lines, and 50 images with no transmission lines was created using the HIFLD unmatched regions, Google Earth Engine and NAIP.
+
+The tab files of the unmatched transmission lines were used as input in Google Earth Engine. A specific region was selected and a buffer of 100 meters added to the transmission lines.
+
+National Agriculture Imagery Program (NAIP) was used for Satellite Images. The National Agriculture Imagery Program (NAIP) features recent, high-resolution aerial images sourced from the United States Department of Agriculture (USDA) Farm Services Agency.  The collecting of NAIP images takes place annually throughout the agricultural growing season in the continental United States.  Roughly 50% of the United States is surveyed annually, with each state generally being surveyed biennially.  The primary objective of the NAIP program is to provide timely accessibility of the captured images to both governmental entities and the general public, typically within a one-year timeframe following its collection.  The historical range of the imagery's spatial resolution has been between 0.6 and 1.0 meters.
+
+All the images were composited into a collection and clipped by the buffer. 
+
+Finally, 50 satellite images containing transmission lines were selected from the collection. 
 
 
-
-### Dataset:
-
+Below is the Google Earth Engine code for extracting the images:
 
 ```
 //Add the Unmatched Lines imported from a SHP
@@ -414,54 +426,86 @@ Map.addLayer(selectedlines, null ,'Selected Lines', true);
 //Zoom to the clipped images in the map
 Map.centerObject(clipped_image, 10)
 
- 
-
- 
-
-// //Export Map Tiles to Cloud Storage as pngs;
-// Export.map.toCloudStorage({
-//     image:clipped_image,
-//     description:"clipped_test_region",
-//     bucket:"he-dev-emi-shlmp-01-images",
-//     scale:0.6,
-//     region:region,
-//     skipEmptyTiles:true,
-//     maxZoom: 18,
-//     minZoom: 18,
-//     fileFormat: 'png'
-// })
-
- 
-
-// //Export Image to Cloud Storage as GeoTIFF
-// Export.image.toCloudStorage({
-//     image:clipped_image,
-//     description:"clipped_test_region",
-//     fileNamePrefix: 'clipped_test_region',
-//     bucket:"he-dev-emi-shlmp-01-images",
-//     scale:1,
-//     maxPixels:1e12,
-//     fileFormat:'GeoTiff',
-//     region:region,
-//     skipEmptyTiles:true,
-//     maxZoom: 18,
-//     minZoom: 18,
-//     formatOptions: {
-//       cloudOptimized: true
-//     }
-// })
+```
+The data was further pre-processed using Python and Numpy to prepare it for training the model.
 
 ```
+# Load and preprocess the dataset
+def load_dataset(data_dir):
+    X, y = [], []
+    classes = ['none', 'transmission_line']
+    for class_idx, class_name in enumerate(classes):
+        class_dir = os.path.join(data_dir, class_name)
+        for img_file in os.listdir(class_dir):
+            img_path = os.path.join(class_dir, img_file)
+            img = cv2.imread(img_path)
+            img = cv2.resize(img, input_shape[:2])
+            img = img.astype("float32") / 255.0
+            X.append(img)
+            if class_idx == 0:
+                y.append(0)  # Encode 'none' as 0
+            else:
+                y.append(1)  # Encode 'transmission_line' as 1
+    return np.array(X), np.array(y)
+```
+Then the training, validation and test sets were created
+
+```
+# Split the data into training, validation, and test sets
+X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.3, random_state=42)
+X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)
+```
+
+### Convolutional Neural Network Model Training:
+This code defines and compiles a Convolutional Neural Network (CNN) model using the Keras library with a TensorFlow backend. A CNN is a type of deep learning model commonly used for image classification tasks.
+
+The model is defined as a Sequential model, which means layers are added sequentially one after the other. The model then adds a 2D convolutional layer with 32 filters of size 3x3. The activation function used is ReLU (Rectified Linear Unit) that introduces non-linearity to the model.. The 'input_shape' should be specified according to the input size of your images.  Followed by adding a 2D max-pooling layer with a pool size of 2x2. Max-pooling reduces the spatial dimensions of the feature maps, which helps in reducing the number of parameters and computational complexity. These two blocks are repeated twice to create more complex features. Then the 'Flatten' layer flattens the output from the previous convolutional layers into a 1D vector, as the subsequent layers require a 1D input. Then a fully connected dense layer with 256 neurons and a ReLU activation function is added. Dropout is applied with a rate of 0.5, which means during training, 50% of the neurons will be randomly dropped to prevent overfitting. Another fully connected dense layer with 128 neurons and a ReLU activation function, followed by another dropout layer with the same rate to improve the model's generalization. The output layer has 'num_classes' neurons, where 'num_classes' represents the number of classes in the classification task. The activation function used is softmax, which gives the probability distribution over the classes.
+
+The model is compiled with the Adam optimizer, which is a popular optimization algorithm for deep learning. The loss function used is 'sparse_categorical_crossentropy', which is suitable for multi-class classification problems with integer labels. The 'accuracy' metric is used to monitor the performance of the model during training.
+
+Now, the model is ready to be trained on the training data for our specific image classification task.
+
+```
+# Create the CNN model
+model = Sequential([
+    Conv2D(32, (3, 3), activation='relu', input_shape=input_shape),
+    MaxPooling2D((2, 2)),
+
+    Conv2D(64, (3, 3), activation='relu'),
+    Conv2D(64, (3, 3), activation='relu'),
+    MaxPooling2D((2, 2)),
+
+    Conv2D(128, (3, 3), activation='relu'),
+    Conv2D(128, (3, 3), activation='relu'),
+    MaxPooling2D((2, 2)),
+
+    Flatten(),
+    Dense(256, activation='relu'),
+    Dropout(0.5),  # dropout for regularization
+    Dense(128, activation='relu'),
+    Dropout(0.5),  # dropout for regularization
+    Dense(num_classes, activation='softmax')
+])
+
+# Compile the model
+model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+```
+
+### Results:
+
+1. The Confusion Matrix displays the precision, recall, and F1 score
+
+2. Training vs. Validation Loss Graph
+
+3. Training vs. Validation Accuracy Graph
+
 
 
 #### Further Work: 
--make greyscale
-- more data
-- labeled data
-- models
-- object detection
-- explore TIFF
-- explore several other types of region
+
+1. The image dataset can be improved by adding more diverse regions, increasing the quantity, and making the images greyscale to reduce noise
+2. Other neural networks can be explored and the results can be compared to get the best model.
+3. The image dataset can be extended to be used in object detection models by labeling transmission lines. 
 
 
 #### Resources
