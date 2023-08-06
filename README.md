@@ -374,6 +374,7 @@ All the images were composited into a collection and clipped by the buffer.
 
 Finally, 50 satellite images containing transmission lines were selected from the collection. 
 
+![image](https://github.com/farastu-who/GIS-DL/assets/34352153/ad126243-8636-43da-a863-d1da8210acc4)
 
 Below is the Google Earth Engine code for extracting the images:
 
@@ -397,8 +398,6 @@ var selectedlines = unmatchedadditions.filterBounds(region).geometry()
 //Buffer the selected Unmatched Line by 100 meters
 var buffer = selectedlines.buffer(100);
 
- 
-
 //Use National Agriculture Imagery Program (NAIP) for Satellite Images 
 //It has the most recent and highest resolution data thats freely available.
 var naip_imagery = ee.ImageCollection('USDA/NAIP/DOQQ')
@@ -406,13 +405,9 @@ var naip_imagery = ee.ImageCollection('USDA/NAIP/DOQQ')
     .filterDate('2020','2023')
     .select('R', 'G', 'B') //Select the image bands(NAIP should have 4 bands but only want red,green,blue for true color)
 
- 
-
 //Composite all the images into a collection so it can be clipped by the buffer
 var clipped_image = naip_imagery.mosaic() 
         .clip(buffer) //Clip the image to the buffer of the selected line
-
- 
 
 //UI Map Stuff (not needed)
 Map.addLayer(region, null ,'Region', false);
@@ -448,7 +443,7 @@ def load_dataset(data_dir):
                 y.append(1)  # Encode 'transmission_line' as 1
     return np.array(X), np.array(y)
 ```
-Then the training, validation and test sets were created
+Then the training, validation and test sets were created.
 
 ```
 # Split the data into training, validation, and test sets
