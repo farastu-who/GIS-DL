@@ -490,11 +490,17 @@ model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=
 
 1. The Confusion Matrix displays the precision, recall, and F1 score
 
+![image](https://github.com/farastu-who/GIS-DL/assets/34352153/4098d6aa-6961-43f9-875b-240eaae57565)
+
+![image](https://github.com/farastu-who/GIS-DL/assets/34352153/71e2794a-f453-4c24-af60-31a532d3c724)
+
 2. Training vs. Validation Loss Graph
+
+  ![image](https://github.com/farastu-who/GIS-DL/assets/34352153/b4b97d73-b58e-4f03-b32a-b44c7141c65d)
 
 3. Training vs. Validation Accuracy Graph
 
-
+![image](https://github.com/farastu-who/GIS-DL/assets/34352153/3a6088d1-4384-48d0-8629-b2d6c34e32f1)
 
 #### Further Work: 
 
