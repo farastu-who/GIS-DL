@@ -513,13 +513,11 @@ model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=
 1. https://medium.com/spatial-data-science/deep-learning-for-geospatial-data-applications-multi-label-classification-2b0a1838fcf3#:~:text=In%20this%20tutorial%2C%20I%20will%20show%20the%20easiest,lines%20of%20python%20code%20to%20accomplish%20this%20task.
 e
 2. https://scholar.google.com/citations?user=n1EE3-8AAAAJ
-3. 
 
 power line image dataset that are publicly available:
-1. TTPLA -
+1. TTPLA 
 2. Emre, Y.Ö., Nezih, G.Ö., et al.: Power line image dataset (infrared-IR and visible
 light-VL). Mendeley Data (2017)
 3. https://iopscience.iop.org/article/10.1088/1742-6596/1757/1/012056/pdf
 4. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9460718/
 5. https://ieeexplore.ieee.org/abstract/document/8550771
-6. 
